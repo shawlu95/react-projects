@@ -1,0 +1,2 @@
+Note
+* `react-icons`
