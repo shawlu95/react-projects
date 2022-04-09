@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { FaSearch } from 'react-icons/fa'
 import Photo from './Photo'
 const clientID = `?client_id=${process.env.REACT_APP_ACCESS_KEY}`
@@ -8,8 +8,10 @@ const searchUrl = `https://api.unsplash.com/search/photos/`
 function App() {
   const [loading, setLoading] = useState(false);
   const [photos, setPhotos] = useState([]);
-  const [page, setPage] = useState(0);
+  const [page, setPage] = useState(1);
   const [query, setQuery] = useState('');
+  const mounted = useRef(false);
+  const [newImages, setNewImages] = useState(false);
 
   const fetchImages = async () => {
     let url;
@@ -34,9 +36,11 @@ function App() {
           return [...oldPhotos, ...data];
         }
       });
+      setNewImages(false);
       setLoading(false);
     } catch (error) {
       console.log(error.response);
+      setNewImages(false);
       setLoading(false);
     }
   };
@@ -44,6 +48,11 @@ function App() {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("Search", query);
+    if (!query) return;
+    if (page === 1) {
+      fetchImages();
+      return;
+    }
     setPage(1);
   };
 
@@ -51,6 +60,30 @@ function App() {
     fetchImages();
     // eslint-disable-next-line
   }, [page]);
+
+  // do not run on initial render
+  // only run on second, third...
+  useEffect(() => {
+    if (!mounted.current) {
+      mounted.current = true;
+      return;
+    }
+    console.log('second')
+    if (!newImages) return;
+    if (loading) return;
+    setPage((oldPage) => oldPage + 1);
+  }, [newImages]);
+
+  const event = () => {
+    if (window.innerHeight + window.scrollY >= document.body.scrollHeight - 2) {
+      setNewImages(true);
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener('scroll', event);
+    return () => window.removeEventListener('scroll', event);
+  }, []);
 
   useEffect(() => {
     const event = window.addEventListener('scroll', () => {
