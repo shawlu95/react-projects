@@ -17,6 +17,26 @@ function App() {
     setPage(index)
   };
 
+  const nextPage = () => {
+    setPage((oldPage) => {
+      let nextPage = oldPage + 1;
+      if (nextPage > data.length - 1) {
+        nextPage = 0;
+      }
+      return nextPage;
+    })
+  };
+
+  const prevPage = () => {
+    setPage((oldPage) => {
+      let nextPage = oldPage - 1;
+      if (nextPage < 0) {
+        nextPage = data.length - 1;
+      }
+      return nextPage;
+    })
+  };
+
   return <main>
     <div className="section-title">
       <h1>{loading ? "loading..." : "pagination"}</h1>
@@ -29,6 +49,7 @@ function App() {
         })}
       </div>
       {!loading && <div className="btn-container">
+        <button className="prev-btn" onClick={prevPage}>Prev</button>
         {data.map((_, index) => {
           return <button
             key={index}
@@ -36,6 +57,7 @@ function App() {
             onClick={() => handlePage(index)}
           >{index + 1}</button>
         })}
+        <button className="prev-btn" onClick={nextPage}>Next</button>
       </div>}
     </section>
   </main>
