@@ -14,19 +14,18 @@ function App() {
   const [newImages, setNewImages] = useState(false);
 
   const fetchImages = async () => {
+    setLoading(true);
     let url;
     const urlPage = `&page=${page}`;
     const urlQuery = `&query=${query}`;
-
     if (query) {
       url = `${searchUrl}${clientID}${urlPage}${urlQuery}`;
     } else {
       url = `${mainUrl}${clientID}${urlPage}`;
     }
-
     try {
-      const resposne = await fetch(url);
-      const data = await resposne.json();
+      const response = await fetch(url);
+      const data = await response.json();
       setPhotos((oldPhotos) => {
         if (query && page === 1) {
           return data.results;
@@ -39,7 +38,6 @@ function App() {
       setNewImages(false);
       setLoading(false);
     } catch (error) {
-      console.log(error.response);
       setNewImages(false);
       setLoading(false);
     }
@@ -85,23 +83,6 @@ function App() {
     return () => window.removeEventListener('scroll', event);
   }, []);
 
-  useEffect(() => {
-    const event = window.addEventListener('scroll', () => {
-      // console.log(`innerHeight ${window.innerHeight}`); // height of window
-      // console.log(`scrollY ${window.scrollY}`); // Y position of window top
-      // console.log(`body height ${document.body.scrollHeight}`); // height of entire page content
-      if (!loading && window.scrollY + window.innerHeight >=
-        document.body.scrollHeight - 2) {
-        setLoading(true);
-        console.log('Fetch more images');
-        setPage((oldPage) => {
-          return oldPage + 1;
-        })
-      }
-    });
-    return () => window.removeEventListener('scroll', event);
-    // eslint-disable-next-line
-  }, []);
   return <main>
     <section className="search">
       <form action="" className="search-form">
