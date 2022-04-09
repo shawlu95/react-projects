@@ -8,29 +8,48 @@ const searchUrl = `https://api.unsplash.com/search/photos/`
 function App() {
   const [loading, setLoading] = useState(false);
   const [photos, setPhotos] = useState([]);
+  const [page, setPage] = useState(1);
 
   const fetchImages = async () => {
     let url;
-    url = `${mainUrl}${clientID}`;
+    url = `${mainUrl}${clientID}&page=${page}`;
     try {
       const resposne = await fetch(url);
       const data = await resposne.json();
-      setPhotos(data);
+      setPhotos((oldPhotos) => {
+        return [...oldPhotos, ...data];
+      });
       setLoading(false);
     } catch (error) {
       console.log(error.response);
       setLoading(false);
     }
-  }
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-  }
+  };
 
   useEffect(() => {
     fetchImages();
-  }, []);
+  }, [page]);
 
+  useEffect(() => {
+    const event = window.addEventListener('scroll', () => {
+      console.log(`innerHeight ${window.innerHeight}`); // height of window
+      console.log(`scrollY ${window.scrollY}`); // Y position of window top
+      console.log(`body height ${document.body.scrollHeight}`); // height of entire page content
+      if (!loading && window.scrollY + window.innerHeight >=
+        document.body.scrollHeight - 2) {
+        setLoading(true);
+        console.log('Fetch more images');
+        setPage((oldPage) => {
+          return oldPage + 1;
+        })
+      }
+    });
+    return () => window.removeEventListener('scroll', event);
+  }, []);
   return <main>
     <section className="search">
       <form action="" className="search-form">
