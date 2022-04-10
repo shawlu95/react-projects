@@ -39,10 +39,14 @@ const AppProvider = ({ children }) => {
     }
   }
 
+  const removeStory = objectID => {
+    dispatch({ type: REMOVE_STORY, payload: { objectID } })
+  }
+
   useEffect(() => {
     fetchStories(`${API_ENDPOINT}query=${state.query}&page=${state.page}`);
   }, []);
-  return <AppContext.Provider value={{ ...state }}>
+  return <AppContext.Provider value={{ ...state, removeStory }}>
     {children}
   </AppContext.Provider>
 }
