@@ -32,7 +32,7 @@ const AppProvider = ({ children }) => {
 
   const [quiz, setQuiz] = useState({
     amount: 10,
-    category: 'sport',
+    category: 'sports',
     difficulty: 'easy'
   });
 
@@ -92,11 +92,10 @@ const AppProvider = ({ children }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const { amount, category, difficulty } = quiz;
+    const url = `${API_ENDPOINT}amount=${amount}&category=${table[category]}&difficulty=${difficulty}&type=multiple`;
+    fetchQuestions(url);
   };
-
-  // useEffect(() => {
-  //   fetchQuestions(tempUrl);
-  // }, []);
 
   return <AppContext.Provider value={{
     waiting, loading, questions, index, correct, error, isModalOpen, quiz,
