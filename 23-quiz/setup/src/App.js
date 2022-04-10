@@ -19,7 +19,7 @@ function App() {
   const { question, incorrect_answers, correct_answer } = questions[index];
   const answers = [...incorrect_answers, correct_answer];
   return <main>
-    {/* <Modal /> */}
+    <Modal />
     <section className="quiz">
       <p className="correct-answers">
         correct answer: {correct} / {index}
