@@ -21,6 +21,20 @@ const reducer = (state, action) => {
       return { ...state, hits: state.hits.filter(item => item.objectID !== action.payload.objectID) };
     case HANDLE_SEARCH:
       return { ...state, query: action.payload.query, page: 0 };
+    case HANDLE_PAGE:
+      if (action.payload.direction === 'inc') {
+        var nextPage = state.page + 1;
+        if (nextPage > state.nbPages - 1) {
+          nextPage = 0;
+        }
+        return { ...state, page: nextPage };
+      } else if (action.payload.direction === 'dec') {
+        var prevPage = state.page - 1;
+        if (prevPage < 0) {
+          prevPage = state.nbPages - 1;
+        }
+        return { ...state, page: prevPage };
+      }
     default:
       throw new Error(`Unknown action "${action.type}"`);
   }
