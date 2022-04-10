@@ -18,8 +18,9 @@ const reducer = (state, action) => {
         nbPages: action.payload.nbPages
       };
     case REMOVE_STORY:
-      console.log('remove', action.payload)
       return { ...state, hits: state.hits.filter(item => item.objectID !== action.payload.objectID) };
+    case HANDLE_SEARCH:
+      return { ...state, query: action.payload.query, page: 0 };
     default:
       throw new Error(`Unknown action "${action.type}"`);
   }
