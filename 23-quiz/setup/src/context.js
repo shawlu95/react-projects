@@ -28,7 +28,13 @@ const AppProvider = ({ children }) => {
   // number of correct answers
   const [correct, setCorrect] = useState(0);
 
-  const [error, setError] = useState({ show: false, msg: '' });
+  const [error, setError] = useState(false);
+
+  const [quiz, setQuiz] = useState({
+    amount: 10,
+    category: 'sport',
+    difficulty: 'easy'
+  });
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -48,7 +54,6 @@ const AppProvider = ({ children }) => {
       setWaiting(true);
       setError(true);
     }
-    console.log(response);
   };
 
   const nextQuestion = () => {
@@ -79,13 +84,23 @@ const AppProvider = ({ children }) => {
     setIsModalOpen(false);
   };
 
-  useEffect(() => {
-    fetchQuestions(tempUrl);
-  }, []);
+  const handleChange = (e) => {
+    const name = e.target.name;
+    const value = e.target.value;
+    setQuiz({ ...quiz, [name]: value });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+  };
+
+  // useEffect(() => {
+  //   fetchQuestions(tempUrl);
+  // }, []);
 
   return <AppContext.Provider value={{
-    waiting, loading, questions, index, correct, error, isModalOpen,
-    nextQuestion, checkAnswer, openModal, closeModal
+    waiting, loading, questions, index, correct, error, isModalOpen, quiz,
+    nextQuestion, checkAnswer, openModal, closeModal, handleChange, handleSubmit
   }}>{children}</AppContext.Provider>
 }
 // make sure use
