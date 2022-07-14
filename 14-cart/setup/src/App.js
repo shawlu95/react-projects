@@ -12,15 +12,15 @@ function reducer(state, action) {
   console.log('reducer called', state, action);
   if (action.type === 'DECREASE') {
     // returning a new state object (not mutating old state)
-    return { count: state.count - 1 };
+    return { ...state, count: state.count - 1 };
   }
 
   if (action.type === 'INCREASE') {
-    return { count: state.count + 1 };
+    return { ...state, count: state.count + 1 };
   }
 
   if (action.type === 'RESET') {
-    return { count: 0 };
+    return { ...state, count: 0 };
   }
 
   // return old state if no matching action found
