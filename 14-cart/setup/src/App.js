@@ -8,30 +8,17 @@ import CartContainer from './CartContainer';
 
 import { createStore } from 'redux';
 import { INCREASE, DECREASE } from './actions';
-
-function reducer(state, action) {
-  console.log('reducer called', state, action);
-  if (action.type === DECREASE) {
-    // returning a new state object (not mutating old state)
-    return { ...state, count: state.count - 1 };
-  }
-
-  if (action.type === INCREASE) {
-    return { ...state, count: state.count + 1 };
-  }
-
-  // return old state if no matching action found
-  return state;
-}
+import reducer from './reducer';
+import cartItems from './data';
 
 const initialStore = {
-  count: 10,
-  name: 'shaw',
+  loading: false,
+  cart: cartItems,
+  total: 0,
+  amount: 0,
 };
 
 const store = createStore(reducer, initialStore);
-store.dispatch({ type: DECREASE });
-store.dispatch({ type: INCREASE });
 
 function App() {
   const { loading } = useGlobalContext();
