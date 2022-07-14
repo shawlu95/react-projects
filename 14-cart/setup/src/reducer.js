@@ -27,6 +27,7 @@ const reducer = (state, action) => {
         }
         return item;
       });
+      return { ...state, cart: cart };
     }
     case DECREASE: {
       let cart = state.cart
