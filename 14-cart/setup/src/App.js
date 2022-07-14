@@ -8,16 +8,8 @@ import CartContainer from './CartContainer';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import reducer from './reducer';
-import cartItems from './data';
 
-const initialStore = {
-  loading: false,
-  cart: cartItems,
-  total: 0,
-  amount: 0,
-};
-
-const store = createStore(reducer, initialStore);
+const store = createStore(reducer);
 
 function App() {
   const { loading } = store.getState();

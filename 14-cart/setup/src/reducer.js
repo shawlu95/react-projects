@@ -8,8 +8,16 @@ import {
   DISPLAY_ITEMS,
   TOGGLE_AMOUNT,
 } from './actions';
+import cartItems from './data';
 
-const reducer = (state, action) => {
+const initialStore = {
+  loading: false,
+  cart: cartItems,
+  total: 0,
+  amount: 0,
+};
+
+const reducer = (state = initialStore, action) => {
   console.log(action);
 
   switch (action.type) {
