@@ -1,7 +1,8 @@
 import React from 'react';
-import { useGlobalContext, state } from './context';
+import { useSelector } from 'react-redux';
+
 const Navbar = () => {
-  const { amount } = useGlobalContext();
+  const { amount } = useSelector((state) => state.cart);
   return (
     <nav>
       <div className='nav-center'>
