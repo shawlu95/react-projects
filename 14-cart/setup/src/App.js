@@ -1,5 +1,4 @@
 import React from 'react';
-import { useGlobalContext } from './context';
 
 // components
 import Navbar from './Navbar';
@@ -21,7 +20,7 @@ const initialStore = {
 const store = createStore(reducer, initialStore);
 
 function App() {
-  const { loading } = useGlobalContext();
+  const { loading } = store.getState();
   if (loading) {
     return (
       <div className='loading'>
