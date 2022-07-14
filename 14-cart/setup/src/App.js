@@ -7,7 +7,7 @@ import CartContainer from './CartContainer';
 // items
 
 import { createStore } from 'redux';
-import { INCREASE, DECREASE } from './actions';
+import { Provider } from 'react-redux';
 import reducer from './reducer';
 import cartItems from './data';
 
@@ -30,10 +30,10 @@ function App() {
     );
   }
   return (
-    <main>
+    <Provider store={store}>
       <Navbar />
       <CartContainer />
-    </main>
+    </Provider>
   );
 }
 
