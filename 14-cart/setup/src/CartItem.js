@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { REMOVE, TOGGLE_AMOUNT } from './actions';
+import { TOGGLE_AMOUNT, removeItem } from './actions';
 
 const CartItem = ({ id, img, title, price, amount, remove, toggle }) => {
   return (
@@ -38,7 +38,7 @@ const CartItem = ({ id, img, title, price, amount, remove, toggle }) => {
 // only pass down dispath function, pass null to first arg
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    remove: (id) => dispatch({ type: REMOVE, payload: id }),
+    remove: (id) => dispatch(removeItem(id)),
     toggle: (type) =>
       dispatch({
         type: TOGGLE_AMOUNT,
