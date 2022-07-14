@@ -23,11 +23,13 @@ function reducer(state, action) {
     return { count: 0 };
   }
 
+  // return old state if no matching action found
   return state;
 }
 
 const initialStore = {
   count: 10,
+  name: 'shaw',
 };
 
 const store = createStore(reducer, initialStore);
