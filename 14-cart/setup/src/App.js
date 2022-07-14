@@ -14,6 +14,15 @@ function reducer(state, action) {
     // returning a new state object (not mutating old state)
     return { count: state.count - 1 };
   }
+
+  if (action.type === 'INCREASE') {
+    return { count: state.count + 1 };
+  }
+
+  if (action.type === 'RESET') {
+    return { count: 0 };
+  }
+
   return state;
 }
 
@@ -23,6 +32,8 @@ const initialStore = {
 
 const store = createStore(reducer, initialStore);
 store.dispatch({ type: 'DECREASE' });
+store.dispatch({ type: 'INCREASE' });
+store.dispatch({ type: 'RESET' });
 
 function App() {
   const { loading } = useGlobalContext();
