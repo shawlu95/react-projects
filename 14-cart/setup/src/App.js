@@ -23,6 +23,10 @@ function reducer(state, action) {
     return { ...state, count: 0 };
   }
 
+  if (action.type === 'RENAME') {
+    return { ...state, name: 'Ava' };
+  }
+
   // return old state if no matching action found
   return state;
 }
@@ -34,6 +38,7 @@ const initialStore = {
 
 const store = createStore(reducer, initialStore);
 store.dispatch({ type: 'DECREASE' });
+store.dispatch({ type: 'RENAME' });
 store.dispatch({ type: 'INCREASE' });
 store.dispatch({ type: 'RESET' });
 
