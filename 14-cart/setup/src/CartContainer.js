@@ -1,9 +1,8 @@
 import React from 'react';
 import CartItem from './CartItem';
-import { useGlobalContext } from './context';
+import { connect } from 'react-redux';
 
-const CartContainer = () => {
-  const { cart, total, clearCart } = useGlobalContext();
+const CartContainer = ({ cart = [], total }) => {
   if (cart.length === 0) {
     return (
       <section className='cart'>
@@ -35,12 +34,15 @@ const CartContainer = () => {
             total <span>${total}</span>
           </h4>
         </div>
-        <button className='btn clear-btn' onClick={clearCart}>
-          clear cart
-        </button>
+        <button className='btn clear-btn'>clear cart</button>
       </footer>
     </section>
   );
 };
 
-export default CartContainer;
+function mapStateToProps(store) {
+  const { cart, total } = store;
+  return { cart, total };
+}
+
+export default connect(mapStateToProps)(CartContainer);
