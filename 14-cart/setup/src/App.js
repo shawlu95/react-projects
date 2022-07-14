@@ -7,24 +7,17 @@ import CartContainer from './CartContainer';
 // items
 
 import { createStore } from 'redux';
+import { INCREASE, DECREASE } from './actions';
 
 function reducer(state, action) {
   console.log('reducer called', state, action);
-  if (action.type === 'DECREASE') {
+  if (action.type === DECREASE) {
     // returning a new state object (not mutating old state)
     return { ...state, count: state.count - 1 };
   }
 
-  if (action.type === 'INCREASE') {
+  if (action.type === INCREASE) {
     return { ...state, count: state.count + 1 };
-  }
-
-  if (action.type === 'RESET') {
-    return { ...state, count: 0 };
-  }
-
-  if (action.type === 'RENAME') {
-    return { ...state, name: 'Ava' };
   }
 
   // return old state if no matching action found
@@ -37,10 +30,8 @@ const initialStore = {
 };
 
 const store = createStore(reducer, initialStore);
-store.dispatch({ type: 'DECREASE' });
-store.dispatch({ type: 'RENAME' });
-store.dispatch({ type: 'INCREASE' });
-store.dispatch({ type: 'RESET' });
+store.dispatch({ type: DECREASE });
+store.dispatch({ type: INCREASE });
 
 function App() {
   const { loading } = useGlobalContext();
