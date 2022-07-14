@@ -10,15 +10,19 @@ import { createStore } from 'redux';
 
 function reducer(state, action) {
   console.log('reducer called', state, action);
+  if (action.type === 'DECREASE') {
+    // returning a new state object (not mutating old state)
+    return { count: state.count - 1 };
+  }
   return state;
 }
 
 const initialStore = {
-  count: 0,
+  count: 10,
 };
 
 const store = createStore(reducer, initialStore);
-console.log(store.getState());
+store.dispatch({ type: 'DECREASE' });
 
 function App() {
   const { loading } = useGlobalContext();
