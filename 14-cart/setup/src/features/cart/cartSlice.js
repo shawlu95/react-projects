@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { openModal } from '../modal/modalSlice';
+// import { openModal } from '../modal/modalSlice';
+
 const initialState = {
   loading: false,
   cartItems: [],

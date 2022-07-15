@@ -9,7 +9,7 @@ const CartContainer = () => {
   const { cartItems, total } = useSelector((store) => store.cart);
   useEffect(() => {
     dispatch(calculateTotals());
-  }, [cartItems]);
+  }, [dispatch, cartItems]);
 
   if (cartItems.length === 0) {
     return (
