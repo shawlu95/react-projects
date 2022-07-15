@@ -5,9 +5,7 @@ import Navbar from './Navbar';
 import CartContainer from './CartContainer';
 import Modal from './Modal';
 import { useDispatch, useSelector } from 'react-redux';
-import { loadItems, displayItems } from './features/cart/cartSlice';
-
-const url = 'https://course-api.com/react-useReducer-cart-project';
+import { getCartItems } from './features/cart/cartSlice';
 
 function App() {
   const dispatch = useDispatch();
@@ -15,13 +13,7 @@ function App() {
   const { isOpen } = useSelector((state) => state.modal);
 
   useEffect(() => {
-    const fetchData = async () => {
-      dispatch(loadItems());
-      const response = await fetch(url);
-      const cartItems = await response.json();
-      dispatch(displayItems({ cartItems }));
-    };
-    fetchData();
+    dispatch(getCartItems());
   }, []);
 
   if (loading) {
