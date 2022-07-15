@@ -3,6 +3,7 @@ import React, { useEffect } from 'react';
 // components
 import Navbar from './Navbar';
 import CartContainer from './CartContainer';
+import Modal from './Modal';
 import { useDispatch, useSelector } from 'react-redux';
 import { loadItems, displayItems } from './features/cart/cartSlice';
 
@@ -30,6 +31,7 @@ function App() {
   }
   return (
     <main>
+      <Modal />
       <Navbar />
       <CartContainer />
     </main>
