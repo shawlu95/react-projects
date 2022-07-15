@@ -1,10 +1,11 @@
 import React from 'react';
 import CartItem from './CartItem';
-import { useGlobalContext } from './context';
-
+import { useSelector, useDispatch } from 'react-redux';
+import { clearCart } from './features/cart/cartSlice';
 const CartContainer = () => {
-  const { cart, total, clearCart } = useGlobalContext();
-  if (cart.length === 0) {
+  const dispatch = useDispatch();
+  const { cartItems, total } = useSelector((store) => store.cart);
+  if (cartItems.length === 0) {
     return (
       <section className='cart'>
         {/* cart header */}
@@ -23,7 +24,7 @@ const CartContainer = () => {
       </header>
       {/* cart items */}
       <div>
-        {cart.map((item) => {
+        {cartItems.map((item) => {
           return <CartItem key={item.id} {...item} />;
         })}
       </div>
@@ -35,7 +36,7 @@ const CartContainer = () => {
             total <span>${total}</span>
           </h4>
         </div>
-        <button className='btn clear-btn' onClick={clearCart}>
+        <button className='btn clear-btn' onClick={() => dispatch(clearCart())}>
           clear cart
         </button>
       </footer>
