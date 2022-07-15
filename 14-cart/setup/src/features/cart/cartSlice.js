@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { openModal } from '../modal/modalSlice';
 const initialState = {
   loading: false,
   cartItems: [],
@@ -9,14 +10,28 @@ const initialState = {
 
 const url = 'https://course-api.com/react-useReducer-cart-project';
 
-export const getCartItems = createAsyncThunk('cart/getCartItems', async () => {
-  try {
-    const { data } = await axios(url);
-    return data;
-  } catch (err) {
-    console.log(err);
+export const getCartItems = createAsyncThunk(
+  'cart/getCartItems',
+  async (name, thunkApi) => {
+    // get a param when calling getCartItems
+    console.log(name);
+
+    // very powerful, can access entire store
+    console.log(thunkApi);
+    console.log(thunkApi.getState());
+
+    // can even dispatch action of other slice (modal)
+    // thunkApi.dispatch(openModal());
+
+    try {
+      const { data } = await axios(url);
+      return data;
+    } catch (err) {
+      // pass error to lifecycle: getCartItems.rejected
+      thunkApi.rejectWithValue('Failed to read from API');
+    }
   }
-});
+);
 
 const cartSlice = createSlice({
   name: 'cart',
@@ -67,7 +82,8 @@ const cartSlice = createSlice({
       state.loading = false;
       state.cartItems = action.payload;
     },
-    [getCartItems.rejected]: (state) => {
+    [getCartItems.rejected]: (state, action) => {
+      console.log(action);
       state.loading = false;
     },
   },

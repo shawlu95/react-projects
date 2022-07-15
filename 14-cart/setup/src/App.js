@@ -13,7 +13,7 @@ function App() {
   const { isOpen } = useSelector((state) => state.modal);
 
   useEffect(() => {
-    dispatch(getCartItems());
+    dispatch(getCartItems('foo'));
   }, []);
 
   if (loading) {
