@@ -2,7 +2,8 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 
 const Navbar = () => {
-  const { amount } = useSelector((state) => state.cart);
+  // entire store is available (all the slices)
+  const { amount } = useSelector((store) => store.cart);
   return (
     <nav>
       <div className='nav-center'>
