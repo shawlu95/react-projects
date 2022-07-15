@@ -18,8 +18,23 @@ const cartSlice = createSlice({
       const itemId = action.payload;
       state.cartItems = state.cartItems.filter((item) => item.id !== itemId);
     },
+    toggleAmount: (state, { payload }) => {
+      const { id, type } = payload;
+      state.cartItems = state.cartItems
+        .map((item) => {
+          if (item.id === id) {
+            if (type === 'inc') {
+              return { ...item, amount: item.amount + 1 };
+            } else if (type === 'dec') {
+              return { ...item, amount: item.amount - 1 };
+            }
+          }
+          return item;
+        })
+        .filter((item) => item.amount !== 0);
+    },
   },
 });
 
-export const { clearCart, removeItem } = cartSlice.actions;
+export const { clearCart, removeItem, toggleAmount } = cartSlice.actions;
 export default cartSlice.reducer;
