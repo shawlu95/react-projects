@@ -12,6 +12,8 @@ const url = 'https://course-api.com/react-useReducer-cart-project';
 function App() {
   const dispatch = useDispatch();
   const { loading } = useSelector((state) => state.cart);
+  const { isOpen } = useSelector((state) => state.modal);
+
   useEffect(() => {
     const fetchData = async () => {
       dispatch(loadItems());
@@ -31,7 +33,7 @@ function App() {
   }
   return (
     <main>
-      <Modal />
+      {isOpen && <Modal />}
       <Navbar />
       <CartContainer />
     </main>
