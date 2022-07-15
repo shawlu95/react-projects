@@ -1,6 +1,10 @@
 import React from 'react';
 import { useGlobalContext } from './context';
+import { useDispatch } from 'react-redux';
+import { removeItem } from './features/cart/cartSlice';
+
 const CartItem = ({ id, img, title, price, amount }) => {
+  const dispatch = useDispatch();
   const { remove, increase, decrease, toggleAmount } = useGlobalContext();
   return (
     <article className='cart-item'>
@@ -9,7 +13,7 @@ const CartItem = ({ id, img, title, price, amount }) => {
         <h4>{title}</h4>
         <h4 className='item-price'>${price}</h4>
         {/* remove button */}
-        <button className='remove-btn' onClick={() => remove(id)}>
+        <button className='remove-btn' onClick={() => dispatch(removeItem(id))}>
           remove
         </button>
       </div>
